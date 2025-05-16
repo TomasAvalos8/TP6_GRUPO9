@@ -16,7 +16,7 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 		
 		boolean estado=false;
 		if (persona.getNombre().trim().length() > 0 && persona.getApellido().trim().length() > 0) {
-	        if (!pdao.existsDni(persona.getDni())) {
+	        if (!pdao.verificarDni(persona.getDni())) {
 	            estado = pdao.insert(persona);
 	        } else {
 	            System.out.println("El DNI ya existe.");

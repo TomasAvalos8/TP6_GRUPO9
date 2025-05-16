@@ -34,7 +34,6 @@ public class VentanaAgregar extends JPanel {
 	public VentanaAgregar() {
 		PersonaDao usuarioDao = new PersonaDaoImpl();
 	
-		
 		setLayout(null);
 		
 		textField = new JTextField();
@@ -109,8 +108,7 @@ public class VentanaAgregar extends JPanel {
 	{
 		this.dlModel = listModelRecibido;
 	}
-	
-	
+		
 	public void agregarPersona()
 	{
 	    PersonaDao usuarioDao = new PersonaDaoImpl();

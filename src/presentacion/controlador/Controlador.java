@@ -12,14 +12,15 @@ public class Controlador implements ActionListener{
 	
 	public Controlador(VentanaPrincipal vista,PersonaNegocio pNeg) {
 		this.ventanaPrincipal=vista;
-		this.pNeg=pNeg;
-		
+		this.pNeg=pNeg;		
 	}
+	
 	public void inicializar()
 	{
 		this.ventanaPrincipal.setVisible(true);
 		this.ventanaPrincipal.getMenuAgregar().addActionListener(this);
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ventanaPrincipal.getMenuAgregar()) {

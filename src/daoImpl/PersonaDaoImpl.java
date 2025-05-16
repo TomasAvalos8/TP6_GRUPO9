@@ -19,8 +19,7 @@ public class PersonaDaoImpl implements PersonaDao {
 	    PreparedStatement statement;
 	    Connection conexion = Conexion.getConexion().getSQLConexion();
 	    boolean isInsertExitoso = false;
-	    try {
-	    	
+	    try {	    	
 	        statement = conexion.prepareStatement(insert);
 	        statement.setString(1, persona.getDni());
 	        statement.setString(2, persona.getNombre());
@@ -41,7 +40,7 @@ public class PersonaDaoImpl implements PersonaDao {
 	    return isInsertExitoso;
 	}
 	
-	public boolean existsDni(String dni) {
+	public boolean verificarDni(String dni) {
         Connection conexion = Conexion.getConexion().getSQLConexion();
         try (PreparedStatement statement = conexion.prepareStatement(sqlExistsDni)) {
             statement.setString(1, dni);
