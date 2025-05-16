@@ -17,12 +17,14 @@ public class Controlador implements ActionListener{
 	}
 	public void inicializar()
 	{
-		this.ventanaPrincipal.setVisible(true);;
+		this.ventanaPrincipal.setVisible(true);
+		this.ventanaPrincipal.getMenuAgregar().addActionListener(this);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if (e.getSource() == ventanaPrincipal.getMenuAgregar()) {
+			ventanaPrincipal.mostrarVentanaAgregar();
+		}
 	}
 
 }

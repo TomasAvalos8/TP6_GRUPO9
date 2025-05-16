@@ -44,34 +44,28 @@ public class VentanaPrincipal extends JFrame {
 		setJMenuBar(menuBar);
 		mnPersonas= new JMenu("Persona");
 		menuBar.add(mnPersonas);
-		menuAgregar= new JMenuItem("Agregar");
-		menuAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				contentPane.removeAll();
-				VentanaAgregar panel= new VentanaAgregar();
-				panel.setDefaultListModel(dlModel);
-				contentPane.add(panel);
-				contentPane.revalidate();
-				contentPane.repaint();
-							 
-			}
-		});
-
+		
+		menuAgregar = new JMenuItem("Agregar");
 		mnPersonas.add(menuAgregar);
-		menuModificar= new JMenuItem("Modificar");
+		menuModificar = new JMenuItem("Modificar");
 		mnPersonas.add(menuModificar);
-		menuEliminar= new JMenuItem("Eliminar");
+		menuEliminar = new JMenuItem("Eliminar");
 		mnPersonas.add(menuEliminar);
-		menuListar= new JMenuItem("Listar");
+		menuListar = new JMenuItem("Listar");
 		mnPersonas.add(menuListar);
-		
-
-		
-		
+			
 	}
 
 
-
+	public void mostrarVentanaAgregar() {
+		contentPane.removeAll();
+		VentanaAgregar panel = new VentanaAgregar();
+		panel.setDefaultListModel(dlModel);
+		contentPane.add(panel, BorderLayout.CENTER);
+		contentPane.revalidate();
+		contentPane.repaint();
+	}
+	
 	public JMenu getMnPersonas() {
 		return mnPersonas;
 	}
