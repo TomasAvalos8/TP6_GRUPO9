@@ -1,7 +1,4 @@
-/dominio/
-/dao/
-/daoImpl/
+/presentacion/
 /negocio/
 /negocioImpl/
-/presentacion/
-/entidad/
+/daoImpl/

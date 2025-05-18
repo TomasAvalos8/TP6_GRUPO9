@@ -24,5 +24,21 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 	    }
 		return estado;
 	}
+	
+	
+	@Override
+	public boolean delete(Persona personaEliminar) {
+		boolean estado=false;
+		if(personaEliminar.getDni().trim() .length() > 0) 
+		{
+			estado=pdao.delete(personaEliminar);
+		}
+		return estado;
+	}
+
+	@Override
+	public List<Persona> readAll() {
+		return pdao.readAll();
+	}
 
 }

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +14,8 @@ import entidad.Persona;
 public class PersonaDaoImpl implements PersonaDao {
 	private static final String insert = "INSERT INTO personas (Dni, Nombre, Apellido) VALUES (?, ?, ?)";
 	private static final String sqlExistsDni = "SELECT COUNT(*) FROM personas WHERE Dni = ?";
+	private static final String delete = "DELETE FROM personas WHERE Dni = ?";
+	private static final String readall = "SELECT * FROM personas";
 	
 	public boolean insert(Persona persona) {
 	    PreparedStatement statement;
@@ -53,5 +55,63 @@ public class PersonaDaoImpl implements PersonaDao {
         }
         return false;
     }
+	
+	
+	
+	public boolean delete(Persona personaEliminar)
+	{
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isdeleteExitoso = false;
+		try 
+		{
+			statement = conexion.prepareStatement(delete);
+			statement.setString(1, personaEliminar.getDni());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isdeleteExitoso = true;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return isdeleteExitoso;
+	}
+	
+	public List<Persona> readAll()
+	{
+		PreparedStatement statement;
+		ResultSet resultSet;
+		ArrayList<Persona> personas = new ArrayList<Persona>();
+		Conexion conexion = Conexion.getConexion();
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(readall);
+			resultSet = statement.executeQuery();
+			while(resultSet.next())
+			{
+				personas.add(getPersona(resultSet));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return personas;
+	}
+	
+	
+	
+	private Persona getPersona(ResultSet resultSet) throws SQLException
+	{
+		String dni = resultSet.getString("Dni");
+		String nombre = resultSet.getString("Nombre");
+		String apellido = resultSet.getString("Apellido");
+		return new Persona(dni, nombre, apellido);
+	}
+
+
 	
 }
