@@ -2,8 +2,8 @@ package presentacion.vista;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
 
 import entidad.Persona;
 
@@ -13,31 +13,25 @@ import javax.swing.JButton;
 import java.util.List;
 
 public class VentanaEliminar extends JPanel {
-	private static final long serialVersionUID = 1L;
-	private JTable table;
-    private DefaultTableModel modeloTabla;
+    private static final long serialVersionUID = 1L;
+    private JList<Persona> listaPersonas;
+    private DefaultListModel<Persona> modeloLista;
     private JButton btnBorrar;
     
     public VentanaEliminar() {
         setLayout(null);
         
-  
-        modeloTabla = new DefaultTableModel(
-            new Object[]{"DNI", "Nombre ", "Apellido"}, 0) {
- 
-				private static final long serialVersionUID = 1L;
-
-			@Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
         
-        table = new JTable(modeloTabla);
-        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION); 
+        modeloLista = new DefaultListModel<>();
+        
+       
+        listaPersonas = new JList<>(modeloLista);
         
         
-        JScrollPane scrollPane = new JScrollPane(table);
+        listaPersonas.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        
+        
+        JScrollPane scrollPane = new JScrollPane(listaPersonas);
         scrollPane.setBounds(66, 62, 300, 183);
         add(scrollPane);
         
@@ -51,23 +45,26 @@ public class VentanaEliminar extends JPanel {
         add(btnBorrar);
     }
     
-    public void llenarTabla(List<Persona> personas) {
-        modeloTabla.setRowCount(0);
+
+    public void llenarLista(List<Persona> personas) {
+        modeloLista.clear();
         
         for (Persona p : personas) {
-            Object[] fila = {
-                p.getDni(),
-                p.getNombre(),
-                p.getApellido()
-            };
-            modeloTabla.addRow(fila);
+            modeloLista.addElement(p);
         }
     }
     
-    public JTable getTable() {
-        return table;
+
+    public JList<Persona> getListaPersonas() {
+        return listaPersonas;
     }
     
+
+    public DefaultListModel<Persona> getModeloLista() {
+        return modeloLista;
+    }
+    
+
     public JButton getBtnBorrar() {
         return btnBorrar;
     }
