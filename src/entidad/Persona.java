@@ -35,4 +35,7 @@ public class Persona {
 		this.apellido = apellido;
 	}
 
+	public String toString() {
+	    return nombre + " " + apellido + " - DNI: " + dni;
+	}
 }

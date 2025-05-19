@@ -41,4 +41,10 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 		return pdao.readAll();
 	}
 
+
+	@Override
+	public boolean modificar(Persona persona) {
+		return  pdao.actualizar(persona);
+	}
+
 }

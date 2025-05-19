@@ -1,5 +1,8 @@
 package presentacion.controlador;
 
+import javax.swing.DefaultListModel;
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,13 +12,14 @@ import entidad.Persona;
 import negocio.PersonaNegocio;
 import presentacion.vista.VentanaEliminar;
 import presentacion.vista.VentanaPrincipal;
-
+import presentacion.vista.VentanaModificar;
 public class Controlador implements ActionListener {
 
 	private VentanaPrincipal ventanaPrincipal;
 	private PersonaNegocio pNeg;
 	private ArrayList<Persona> personasEnTabla;
 	private VentanaEliminar ventanaEliminar;
+	private VentanaModificar ventanaModificar;
 	
 	public Controlador(VentanaPrincipal vista, PersonaNegocio pNeg) {
 		this.ventanaPrincipal = vista;
@@ -53,6 +57,7 @@ public class Controlador implements ActionListener {
 		this.ventanaPrincipal.setVisible(true);
 		this.ventanaPrincipal.getMenuAgregar().addActionListener(this);
 		this.ventanaPrincipal.getMenuEliminar().addActionListener(this);
+		this.ventanaPrincipal.getMenuModificar().addActionListener(this);
 		
 	}
 	
@@ -85,5 +90,54 @@ public class Controlador implements ActionListener {
 				}
 			});
 		}
+		else if (e.getSource() == ventanaPrincipal.getMenuModificar()) {
+			refrescarTabla();
+			ventanaPrincipal.mostrarVentanaModificar();
+			this.ventanaModificar = ventanaPrincipal.getVentanaModificar();
+
+
+			DefaultListModel<Persona> modelo = ventanaModificar.getModeloLista();
+			modelo.clear();
+			for (Persona p : personasEnTabla) {
+				modelo.addElement(p);
+			}
+
+
+			ventanaModificar.getListaPersonas().addListSelectionListener(evt -> {
+				if (!evt.getValueIsAdjusting()) {
+					Persona seleccionada = ventanaModificar.getListaPersonas().getSelectedValue();
+					if (seleccionada != null) {
+						ventanaModificar.getTxtNombre().setText(seleccionada.getNombre());
+						ventanaModificar.getTxtApellido().setText(seleccionada.getApellido());
+						ventanaModificar.getTxtDni().setText(seleccionada.getDni());
+					}
+				}
+			});
+
+
+			ventanaModificar.getBtnModificar().addActionListener(evt -> {
+				Persona seleccionada = ventanaModificar.getListaPersonas().getSelectedValue();
+				if (seleccionada != null) {
+					String nuevoNombre = ventanaModificar.getTxtNombre().getText();
+					String nuevoApellido = ventanaModificar.getTxtApellido().getText();
+
+					seleccionada.setNombre(nuevoNombre);
+					seleccionada.setApellido(nuevoApellido);
+
+					boolean ok = pNeg.modificar(seleccionada);
+					if (ok) {
+						ventanaPrincipal.mostrarMensaje("Modificación exitosa.");
+						ventanaModificar.getTxtNombre().setText("");
+						ventanaModificar.getTxtApellido().setText("");
+						ventanaModificar.getTxtDni().setText("");
+						refrescarTabla();
+						
+					} else {
+						ventanaPrincipal.mostrarMensaje("Error al modificar.");
+					}
+				}
+			});
+		}
+
 	}
 }
