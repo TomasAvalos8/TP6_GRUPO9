@@ -12,6 +12,7 @@ import negocio.PersonaNegocio;
 import presentacion.vista.VentanaEliminar;
 import presentacion.vista.VentanaPrincipal;
 import presentacion.vista.VentanaModificar;
+import presentacion.vista.VentanaListar;
 
 public class Controlador implements ActionListener {
 
@@ -20,6 +21,7 @@ public class Controlador implements ActionListener {
     private ArrayList<Persona> personasEnTabla;
     private VentanaEliminar ventanaEliminar;
     private VentanaModificar ventanaModificar;
+    private VentanaListar ventanaListar;
     
     public Controlador(VentanaPrincipal vista, PersonaNegocio pNeg) {
         this.ventanaPrincipal = vista;
@@ -56,6 +58,7 @@ public class Controlador implements ActionListener {
         this.ventanaPrincipal.getMenuAgregar().addActionListener(this);
         this.ventanaPrincipal.getMenuEliminar().addActionListener(this);
         this.ventanaPrincipal.getMenuModificar().addActionListener(this);
+        this.ventanaPrincipal.getMenuListar().addActionListener(this);
     }
 
     private void refrescarTabla() {
@@ -129,6 +132,12 @@ public class Controlador implements ActionListener {
                     }
                 }
             });
+        }
+        else if (e.getSource() == ventanaPrincipal.getMenuListar()) {
+            refrescarTabla();
+            ventanaPrincipal.mostrarVentanaListar();
+            this.ventanaListar = ventanaPrincipal.getVentanaListar();
+            this.ventanaListar.llenarTabla(personasEnTabla);
         }
     }
 }

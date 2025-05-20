@@ -28,6 +28,7 @@ public class VentanaPrincipal extends JFrame {
     private JPanel contentPane;
     private VentanaEliminar ventanaEliminar;
     private VentanaModificar ventanaModificar;
+    private VentanaListar ventanaListar;
     private JTable tablaPersonas;
     private DefaultTableModel modelPersonas;
     private String[] nombreColumnas = {"Dni","Nombre y apellido"};
@@ -99,6 +100,14 @@ public class VentanaPrincipal extends JFrame {
         contentPane.repaint();
     }
     
+    public void mostrarVentanaListar() {
+        contentPane.removeAll();
+        ventanaListar = new VentanaListar();
+        contentPane.add(ventanaListar, BorderLayout.CENTER);
+        contentPane.revalidate();
+        contentPane.repaint();
+    }
+    
     public void llenarTabla(List<Persona> personasEnTabla) {
         this.getModelPersonas().setRowCount(0); //Para vaciar la tabla
         this.getModelPersonas().setColumnCount(0);
@@ -115,6 +124,10 @@ public class VentanaPrincipal extends JFrame {
     
     public VentanaModificar getVentanaModificar() {
         return ventanaModificar;
+    }
+    
+    public VentanaListar getVentanaListar() {
+        return ventanaListar;
     }
     
     public void mostrarMensaje(String mensaje)
